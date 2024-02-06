@@ -5,6 +5,7 @@
 
 <mapper namespace="com.icia.movieinfo.dao.MovieDao">
  
+ <select id="getMovieList" resultType="movie"></select>
  
  
 </mapper>
