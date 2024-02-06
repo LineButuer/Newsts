@@ -5,7 +5,9 @@
 
 <mapper namespace="com.icia.movieinfo.dao.MovieDao">
  
- <select id="getMovieList" resultType="movie"></select>
+ <select id="getMovieList" resultType="movie" >
+ 	SELECT * FROM mlist
+ </select>
  
  
 </mapper>

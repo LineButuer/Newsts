@@ -1,61 +1,64 @@
-<%@ page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page session="false" %>
-<%!
-public int amount(int a, int b){
-	return a * b;
-}
-%>
+	pageEncoding="UTF-8"%>
+	
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="false"%>
+
 <html>
 <head>
-	<title>Home</title>
+<title>MOVIE INFO - Home</title>
+<link rel="stulesheet" href="resources/css/style.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+	integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+	crossorigin="anonymous"></script>
 </head>
 <body>
-<h1>
-	Hello world!  
-</h1>
 
-<P>  The time on the server is ${serverTime}. </P>
-<hr>
-<!-- Scriptlet -->
-<% 
-	String name = "홍길동";
-	int age = 25;
-	Date now = new Date();
-%>
-<p>현재 : <%=now%></p>
-<p>이름 : <%=name%></p><!-- 표현식 -->
-<p>나이 : <%=age%></p>
-<table border="1">
-	<tr>
-		<th>번호</th>
-		<th>이름</th>
-		<th>개수</th>
-	</tr>
-	<%
-	for(int i = 0; i < 5; i++){
-	%>
-		<tr>
-			<td><%=i%></td>
-			<td>TV<%=i%></td>
-			<td><%=amount(i, 10)%></td>
-		</tr>
-	<%
-	}
-	%>
-	<%
-	for(int j = 0; j < 5; j++){
-		out.println("<tr>");
-		out.println("<td>" + j + "</td>");
-		out.println("<td>냉장고" + j + "</td>");
-		out.println("<td>" + amount(j, 10) + "</td>");
-		out.println("</tr>");
-	}
-	%>
-</table>
-<hr>
-<a href="jstl_1">[이동]</a>
+	<div class="wrap">
+		<jsp:include page="header.jsp" />
+		<div class="content">
+			<div class="list=title">
+				<h2 class="form-header"></h2>
+				영화목록
+				<h2>
+					<button class="wr-btn" onclick="location.href='./writeFrm'">
+						영화등록</button>
+			</div>
+			<div class="data-area">
+				<!-- 영화 목록 출력 -->
+				<c:if test="${empty mList}">
+					<div class="movie-item">
+						<span class="none-content">등록된 영화가 없습니다</span>
+					</div>
+				</c:if>
+				<c:if test="${!empty mList}">
+					<c:forEach var="mitem" items="${mList}">
+						<div class="movie-item">
+							<a href="detail?m_code="${mitem.m_code}"> <c:if
+									test="${empty mitem.p_sysname}">
+									<img src="resources/images/no_image.jpg">
+								</c:if> <c:if test="${!empty mitem.p_sysname}">
+									<img src="resources/upload/${mitem.p_sysname}">
+								</c:if>
+							</a>
+							<div class="info-pre">
+								<div class="title-pre">
+									<a href="detail?m_code="${mitem.m_code}">
+										${mitem.m_name}
+									</a>
+								</div>
+								<div class="content-pre">${mitem_director}</div>
+								<div class="content-pre">${mitem_m_open}</div>
+							</div>
+						</div>
+					</c:forEach>
+				</c:if>
+			</div>
+		</div>
+
+		<jsp:include page="footer.jsp" />
+	</div>
+
 </body>
 </html>
 
